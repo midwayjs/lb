@@ -1,0 +1,19 @@
+{
+  "name": "@midwayjs/lb",
+  "version": "0.1.0",
+  "description": "midway language bridge",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "language",
+    "bridge"
+  ],
+  "files": [
+    "index.js"
+  ],
+  "author": "echosoar",
+  "license": "MIT",
+  "dependencies": {
+    "nanoid": "^3.0.0"
+  }
+}
