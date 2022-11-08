@@ -15,7 +15,6 @@ type LB struct {
 	lbr         *LBReader
 	eventMap    map[string]EventCallback
 	closeChan   chan int
-	count       int
 	established bool
 }
 
@@ -97,10 +96,6 @@ func (lb *LB) sendByType(data string, msgType string) error {
 
 func (lb *LB) listen() {
 	for {
-		lb.count = lb.count + 1
-		if lb.count > 500 {
-			lb.closeChan <- 1
-		}
 		lb.tryGetMessage()
 		// execCount, _ := lb.tryGetMessage()
 		// if execCount <= 0 {
@@ -119,6 +114,8 @@ func (lb *LB) tryGetMessage() (int, error) {
 	event := msg.MsgType
 	if event == "ready" {
 		event = "establish"
+	} else if event == "close" {
+		lb.closeChan <- 1
 	} else if !lb.established {
 		return 0, nil
 	}

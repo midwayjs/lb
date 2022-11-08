@@ -43,6 +43,10 @@ class LB {
         return this.sendByType(message, 'message', nocallback);
     }
 
+    async close() {
+        return this.sendByType('close', 'close', true);
+    }
+
     async sendByType(message, type, nocallback) {
         const id = this.genId();
         let callback;;

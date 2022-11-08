@@ -7,9 +7,10 @@ const proc = spawn('go', ['test'], {
 });
 ;(async () => {
     const lb = await establish(proc);
-    setInterval(async () => {
+    for(let i = 0; i < 10; i ++) {
         const res = await lb.send({ name: 'xxx'});
         console.log('res', res);
-    }, 1000)
+    }
+    await lb.close();
 })();
 
