@@ -6,7 +6,7 @@ const proc = spawn('go', ['test'], {
     stdio: [0, 1, 2, 'ipc']
 });
 ;(async () => {
-    const lb = await establish(proc);
+    const lb = await establish(proc, { APP_NAME: 'midway/lb' });
     for(let i = 0; i < 10; i ++) {
         const res = await lb.send({ name: 'xxx'});
         console.log('res', res);

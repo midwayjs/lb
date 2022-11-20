@@ -7,7 +7,7 @@ class LB {
         this._eventMap = {};
     }
 
-    async init() {
+    async init(options) {
         let handleInitResolve;
         const initPromise = new Promise(resolve => {
             handleInitResolve = resolve;
@@ -31,7 +31,7 @@ class LB {
             }
         });
         await initPromise;
-        await this.sendByType('establish', 'ready');
+        await this.sendByType(options || {}, 'ready');
         return ;
     }
 
@@ -62,7 +62,7 @@ class LB {
         this.proc.send({
             id,
             type,
-            data: message
+            data: typeof message === 'string' ? message : JSON.stringify(message),
         });
         return callback;
     }
@@ -85,7 +85,7 @@ class LB {
 }
 const establish = async (proc, options) => {
     const lb = new LB(proc);
-    await lb.init();
+    await lb.init(options);
     return lb;
 }
 module.exports = {
